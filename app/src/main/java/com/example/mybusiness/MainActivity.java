@@ -1,7 +1,9 @@
 package com.example.mybusiness;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,5 +28,16 @@ public class MainActivity extends AppCompatActivity {
     public void Disable(View v) {
 
         v.setEnabled(false);
+        Log.d("Button", "Button Clicked");
+
+        Button b = (Button) v;
+        b.setText("Disabled");
+
+        View vv = findViewById(R.id.button3);
+        vv.setEnabled(false);
+
+        Button bb = (Button) vv;
+        bb.setText("Disabled");
+
     }
 }
