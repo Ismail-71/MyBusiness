@@ -1,10 +1,10 @@
 package com.example.mybusiness;
 
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -15,39 +15,54 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText editTextUsername;
+    private EditText editTextPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        Button buttonLogin = findViewById(R.id.buttonLogin);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        buttonLogin.setOnClickListener(v -> loginUser());
     }
 
-    public void lunchSettings(View view){
-        Intent i = new Intent(this, SettingActivity.class);
+    private void loginUser() {
+        String username = editTextUsername.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
-        startActivity(i);
-    }
+        if (TextUtils.isEmpty(username)) {
+            editTextUsername.setError(getString(R.string.error_username_empty));
+            editTextUsername.requestFocus();
+            return;
+        }
 
-    public void Disable(View v) {
+        if (TextUtils.isEmpty(password)) {
+            editTextPassword.setError(getString(R.string.error_password_empty));
+            editTextPassword.requestFocus();
+            return;
+        }
 
-        v.setEnabled(false);
-        Log.d("Button", "Button Clicked");
+        // --- IMPORTANT: Hardcoded credentials for demonstration ONLY ---
+        // --- In a real app, validate against a backend or secure storage ---
+        if (username.equals("user") && password.equals("password")) {
+            Toast.makeText(MainActivity.this, R.string.login_successful, Toast.LENGTH_SHORT).show();
+            // TODO: Navigate to another activity upon successful login
+            // For example:
 
-        Button b = (Button) v;
-        b.setText(R.string.disabled);
-
-        View vv = findViewById(R.id.button3);
-        vv.setEnabled(false);
-
-        Button bb = (Button) vv;
-        bb.setText(R.string.disabled);
-        Toast.makeText(this, "new click", Toast.LENGTH_LONG).show();
-
-
+            // finish(); // Optional: finish MainActivity so user can't go back to login screen
+        } else {
+            Toast.makeText(MainActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+        }
     }
 }
