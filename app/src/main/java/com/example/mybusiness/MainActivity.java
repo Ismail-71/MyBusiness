@@ -6,10 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+// Removed Toast import as it's no longer used for login success/failure
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
-    private TextView textViewLoginError; // TextView for displaying login errors
+    private TextView textViewLoginError; // TextView for displaying login errors/success
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,10 @@ public class MainActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         Button buttonLogin = findViewById(R.id.buttonLogin);
-        textViewLoginError = findViewById(R.id.textViewLoginError); // Initialize the error TextView
+        textViewLoginError = findViewById(R.id.textViewLoginError); // Initialize the TextView
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            // Adjust padding: typically for a login screen, you might not want to pad the entire view for system bars,
-            // especially if the toolbar handles the top inset.
-            // For now, keeping it as it might be part of your desired layout.
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        // Hide error message before validation
+        // Hide message before validation
         textViewLoginError.setVisibility(View.GONE);
 
         if (TextUtils.isEmpty(username)) {
@@ -71,15 +69,17 @@ public class MainActivity extends AppCompatActivity {
         // --- IMPORTANT: Hardcoded credentials for demonstration ONLY ---
         // --- In a real app, validate against a backend or secure storage ---
         if (username.equals("user") && password.equals("password")) {
-            Toast.makeText(MainActivity.this, R.string.login_successful, Toast.LENGTH_SHORT).show();
+            textViewLoginError.setText(R.string.login_successful);
+            textViewLoginError.setBackgroundColor(ContextCompat.getColor(this, R.color.success_background_green));
+            textViewLoginError.setVisibility(View.VISIBLE);
             // TODO: Navigate to another activity upon successful login
             // For example:
             // Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             // startActivity(intent);
             // finish(); // Optional: finish MainActivity so user can't go back to login screen
         } else {
-            // Show error message in the TextView instead of a Toast
             textViewLoginError.setText(R.string.login_failed);
+            textViewLoginError.setBackgroundColor(ContextCompat.getColor(this, R.color.error_background_red));
             textViewLoginError.setVisibility(View.VISIBLE);
         }
     }

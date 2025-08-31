@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="error_background_red">#FF0000</color>
+    <color name="success_background_green">#4CAF50</color>
 </resources>
