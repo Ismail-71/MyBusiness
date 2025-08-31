@@ -13,4 +13,7 @@
     <string name="login_failed">Login failed. Please check your credentials.</string>
     <string name="error_username_empty">Username cannot be empty</string>
     <string name="error_password_empty">Password cannot be empty</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="button_add_customer">Add Customer</string>
+    <string name="button_add_product">Add Product</string>
 </resources>

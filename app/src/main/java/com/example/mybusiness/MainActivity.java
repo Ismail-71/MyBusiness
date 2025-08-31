@@ -1,12 +1,12 @@
 package com.example.mybusiness;
 
+import android.content.Intent; // Added Intent import
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-// Removed Toast import as it's no longer used for login success/failure
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -72,11 +72,12 @@ public class MainActivity extends AppCompatActivity {
             textViewLoginError.setText(R.string.login_successful);
             textViewLoginError.setBackgroundColor(ContextCompat.getColor(this, R.color.success_background_green));
             textViewLoginError.setVisibility(View.VISIBLE);
-            // TODO: Navigate to another activity upon successful login
-            // For example:
-            // Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            // startActivity(intent);
-            // finish(); // Optional: finish MainActivity so user can't go back to login screen
+            
+            // Navigate to DashboardActivity
+            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish(); // Finish MainActivity so the user can't go back to it
+
         } else {
             textViewLoginError.setText(R.string.login_failed);
             textViewLoginError.setBackgroundColor(ContextCompat.getColor(this, R.color.error_background_red));
